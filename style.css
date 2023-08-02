@@ -64,7 +64,15 @@ body {
 }
 
 .card-back {
-  background-color: dodgerblue;
+  background-color: #fff;
   color: white;
   transform: rotateY(180deg);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-back img {
+  width: 80%;
 }

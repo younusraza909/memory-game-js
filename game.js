@@ -1,6 +1,22 @@
 // Select the game container element
 const gameContainer = document.querySelector(".game-container");
 
+// This array contain path to logo use in this game
+let logos = [
+  "./assets/angular.svg",
+  "./assets/backbone.svg",
+  "./assets/ember.svg",
+  "./assets/bootstrap.svg",
+  "./assets/css.svg",
+  "./assets/django.svg",
+  "./assets/js.svg",
+  "./assets/mui.png",
+  "./assets/python.png",
+  "./assets/react.svg",
+  "./assets/tailwind.svg",
+  "./assets/vue.svg",
+];
+
 // Function to create a card element
 function createCard() {
   const card = document.createElement("div");
@@ -29,11 +45,22 @@ function createCard() {
 
 // Function to render the game grid
 function renderGame() {
-  for (let i = 0; i < 6; i++) {
-    for (let y = 0; y < 4; y++) {
-      const card = createCard(); // Create a card
-      gameContainer.appendChild(card); // Append card to the game container
-    }
+  for (let i = 0; i < 24; i++) {
+    const card = createCard(); // Create a card
+
+    // adding logo to card
+    const backCard = card.querySelector(".card-back");
+
+    // Getting index to pick logo
+    const logoIndex = Math.floor(i / 2) % logos.length;
+
+    // creating image
+    const image = document.createElement("img");
+    image.src = logos[logoIndex];
+
+    backCard.append(image);
+
+    gameContainer.appendChild(card); // Append card to the game container
   }
 }
 
