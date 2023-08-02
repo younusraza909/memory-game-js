@@ -43,7 +43,7 @@ function markeAsChecked(id) {
 
 // function to check card is matched or not
 function checkIsMatchCard(card) {
-  // // If user clicked  a matched card
+  // If user clicked  a matched card
   if (card.classList.contains("disabled") || card.classList.contains("click"))
     return;
 
@@ -61,11 +61,16 @@ function checkIsMatchCard(card) {
       unflippingCard();
     }, 500);
 
+    // update score by 2
+    moves = moves + 2;
+    updateUI();
+
     return;
   }
 
   // if second card is same as first card
   if (tempFlippedCard.length > 0 && tempFlippedCard.includes(card.id)) {
+    tempFlippedCard = [];
     setTimeout(() => {
       markeAsChecked(card.id);
     }, 500);
