@@ -1,5 +1,10 @@
 // Select the game container element
 const gameContainer = document.querySelector(".game-container");
+const timerContainer = document.querySelector(".time");
+const moveContainer = document.querySelector(".moves");
+
+// State For Our App
+let moves = 0;
 
 // This array contain path to logo use in this game
 let logos = [
@@ -16,6 +21,13 @@ let logos = [
   "./assets/tailwind.svg",
   "./assets/vue.svg",
 ];
+
+// update ui function for all possible state update up ahead
+function updateUI() {
+  // update moves
+  moveContainer.textContent = ` Moves: ${String(moves).padStart(2, "0")}`;
+}
+
 // we are tracking  logo count on rendering game
 let logoCounts = {};
 
@@ -40,11 +52,14 @@ function createCard() {
   // Toggle the 'click' class on card click
   card.addEventListener("click", () => {
     card.classList.toggle("click");
+    moves++;
+    updateUI();
   });
 
   return card;
 }
 
+// Function to add image into card
 function addImageToCard(card) {
   const backCard = card.querySelector(".card-back");
 
@@ -68,6 +83,26 @@ function addImageToCard(card) {
   return card;
 }
 
+// Start Timer Function for our app
+function startTimer() {
+  let seconds = 1;
+
+  function formatTime(time) {
+    const minutes = Math.floor(time / 60);
+    const seconds = time % 60;
+
+    return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(
+      2,
+      "0"
+    )}`;
+  }
+
+  setInterval(() => {
+    timerContainer.textContent = ` Time: ${formatTime(seconds)}`;
+    seconds++;
+  }, 1000);
+}
+
 // Function to render the game grid
 function renderGame() {
   for (let i = 0; i < 24; i++) {
@@ -78,6 +113,9 @@ function renderGame() {
 
     gameContainer.appendChild(cardWithImage); // Append card to the game container
   }
+
+  // Start Timer
+  startTimer();
 }
 
 // Wait for the DOM to be fully loaded before rendering the game
