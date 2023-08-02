@@ -106,6 +106,10 @@ body {
   transform: rotateY(180deg);
 }
 
+.card.disabled .card-back {
+  filter: brightness(50%);
+}
+
 .card-front,
 .card-back {
   position: absolute;
