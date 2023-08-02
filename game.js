@@ -16,6 +16,8 @@ let logos = [
   "./assets/tailwind.svg",
   "./assets/vue.svg",
 ];
+// we are tracking  logo count on rendering game
+let logoCounts = {};
 
 // Function to create a card element
 function createCard() {
@@ -43,24 +45,38 @@ function createCard() {
   return card;
 }
 
+function addImageToCard(card) {
+  const backCard = card.querySelector(".card-back");
+
+  // Getting index to pick logo
+  let logoIndex;
+
+  do {
+    logoIndex = Math.floor(Math.random() * logos.length);
+  } while (logoCounts[logoIndex] >= 2);
+
+  logoCounts[logoIndex] = (logoCounts[logoIndex] || 0) + 1;
+
+  const logoPath = logos[logoIndex];
+
+  // creating image
+  const image = document.createElement("img");
+  image.src = logos[logoIndex];
+
+  backCard.append(image);
+
+  return card;
+}
+
 // Function to render the game grid
 function renderGame() {
   for (let i = 0; i < 24; i++) {
     const card = createCard(); // Create a card
 
-    // adding logo to card
-    const backCard = card.querySelector(".card-back");
+    // Adding images to card
+    const cardWithImage = addImageToCard(card);
 
-    // Getting index to pick logo
-    const logoIndex = Math.floor(i / 2) % logos.length;
-
-    // creating image
-    const image = document.createElement("img");
-    image.src = logos[logoIndex];
-
-    backCard.append(image);
-
-    gameContainer.appendChild(card); // Append card to the game container
+    gameContainer.appendChild(cardWithImage); // Append card to the game container
   }
 }
 
