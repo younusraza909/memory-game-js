@@ -5,6 +5,8 @@ const moveContainer = document.querySelector(".moves");
 
 // State For Our App
 let moves = 0;
+// we are tracking  logo count on rendering game
+let logoCounts = {};
 
 // This array contain path to logo use in this game
 let logos = [
@@ -27,9 +29,6 @@ function updateUI() {
   // update moves
   moveContainer.textContent = ` Moves: ${String(moves).padStart(2, "0")}`;
 }
-
-// we are tracking  logo count on rendering game
-let logoCounts = {};
 
 // Function to create a card element
 function createCard() {
@@ -102,6 +101,18 @@ function startTimer() {
     timerContainer.textContent = ` Time: ${formatTime(seconds)}`;
     seconds++;
   }, 1000);
+}
+
+// Unflipping all the card but not those who are already matched
+function unflippingCard() {
+  const cards = document.querySelectorAll(".card");
+
+  // we will loop through each card and check if it is disabled means already matched
+  cards.forEach((card) => {
+    if (!card.classList.contains("disabled")) {
+      card.classList = ["card"];
+    }
+  });
 }
 
 // Function to render the game grid
