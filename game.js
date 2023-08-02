@@ -72,7 +72,8 @@ function addImageToCard(card) {
 
   logoCounts[logoIndex] = (logoCounts[logoIndex] || 0) + 1;
 
-  const logoPath = logos[logoIndex];
+  // adding logo index to card for furthur use
+  card.setAttribute("id", logoIndex);
 
   // creating image
   const image = document.createElement("img");
@@ -110,7 +111,6 @@ function renderGame() {
 
     // Adding images to card
     const cardWithImage = addImageToCard(card);
-
     gameContainer.appendChild(cardWithImage); // Append card to the game container
   }
 
