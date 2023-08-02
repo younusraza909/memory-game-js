@@ -5,6 +5,7 @@ const moveContainer = document.querySelector(".moves");
 
 // State For Our App
 let moves = 0;
+
 // we are tracking  logo count on rendering game
 let logoCounts = {};
 
@@ -23,6 +24,43 @@ let logos = [
   "./assets/tailwind.svg",
   "./assets/vue.svg",
 ];
+
+// an array to temp store a card that is flipped
+let tempFlippedCard = [];
+
+//function taking 2 argument (card id) and adding disabled class to it which means its matched
+function markeAsChecked(id) {
+  const cards = document.querySelectorAll(".card");
+
+  cards.forEach((card) => {
+    if (card.id === id) {
+      card.classList = ["card disabled"];
+    }
+  });
+}
+
+// function to check card is matched or not
+function checkIsMatchCard(card) {
+  // If user clicked  a matched card
+  if (card.classList.contains("disabled")) return;
+
+  // the card clicked was first one
+  if (tempFlippedCard.length === 0) {
+    tempFlippedCard.push(card.id);
+  }
+
+  // if second card that was click is not equal to first card
+  if (tempFlippedCard.length && !tempFlippedCard.includes(card.classList.id)) {
+    tempFlippedCard = [];
+
+    unflippingCard();
+    return;
+  }
+  if (tempFlippedCard.length && tempFlippedCard.includes(card.classList.id)) {
+    markeAsChecked(card.classList.id);
+    return;
+  }
+}
 
 // update ui function for all possible state update up ahead
 function updateUI() {
@@ -51,8 +89,7 @@ function createCard() {
   // Toggle the 'click' class on card click
   card.addEventListener("click", () => {
     card.classList.toggle("click");
-    moves++;
-    updateUI();
+    checkIsMatchCard(card);
   });
 
   return card;
