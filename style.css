@@ -39,14 +39,23 @@ body {
   color: white;
   padding: 15px 32px;
   text-align: center;
+  font-weight: bold;
   text-decoration: none;
   display: inline-block;
   font-size: 13px;
-  letter-spacing: 2px;
   margin: 5px;
   text-transform: uppercase;
   border-radius: 10px;
   cursor: pointer;
+}
+
+.button:disabled {
+  background-color: #555;
+  cursor: not-allowed;
+}
+
+.button:not(:disabled):active {
+  transform: scale(0.95);
 }
 
 .stats-container {

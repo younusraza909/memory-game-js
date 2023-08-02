@@ -2,9 +2,12 @@
 const gameContainer = document.querySelector(".game-container");
 const timerContainer = document.querySelector(".time");
 const moveContainer = document.querySelector(".moves");
+const restartButton = document.querySelector("#restart");
+const startButton = document.querySelector("#start");
 
 // State For Our App
 let moves = 0;
+let seconds = 1;
 
 // we are tracking  logo count on rendering game
 let logoCounts = {};
@@ -114,7 +117,6 @@ function addImageToCard(card) {
   do {
     logoIndex = Math.floor(Math.random() * logos.length);
   } while (logoCounts[logoIndex] >= 2);
-
   logoCounts[logoIndex] = (logoCounts[logoIndex] || 0) + 1;
 
   // adding logo index to card for furthur use
@@ -131,8 +133,6 @@ function addImageToCard(card) {
 
 // Start Timer Function for our app
 function startTimer() {
-  let seconds = 1;
-
   function formatTime(time) {
     const minutes = Math.floor(time / 60);
     const seconds = time % 60;
@@ -163,11 +163,13 @@ function unflippingCard() {
 
 // Function to render the game grid
 function renderGame() {
+  // so game container could be empty if it had anything we can than use it for restart game
+  gameContainer.innerHTML = "";
   for (let i = 0; i < 24; i++) {
     const card = createCard(); // Create a card
-
     // Adding images to card
     const cardWithImage = addImageToCard(card);
+
     gameContainer.appendChild(cardWithImage); // Append card to the game container
   }
 
@@ -175,5 +177,17 @@ function renderGame() {
   startTimer();
 }
 
+// adding event listner to restart button
+restartButton.addEventListener("click", () => {
+  logoCounts = {};
+  seconds = 0;
+  moves = 0;
+  renderGame();
+  updateUI();
+});
+
 // Wait for the DOM to be fully loaded before rendering the game
-document.addEventListener("DOMContentLoaded", renderGame);
+start.addEventListener("click", () => {
+  renderGame();
+  startButton.disabled = true;
+});
