@@ -36,7 +36,7 @@ function markeAsChecked(id) {
 
   cards.forEach((card) => {
     if (card.id === id) {
-      card.classList = ["card disabled"];
+      card.classList = ["card disabled click"];
     }
   });
 }
