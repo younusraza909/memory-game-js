@@ -41,23 +41,32 @@ function markeAsChecked(id) {
 
 // function to check card is matched or not
 function checkIsMatchCard(card) {
-  // If user clicked  a matched card
-  if (card.classList.contains("disabled")) return;
+  // // If user clicked  a matched card
+  if (card.classList.contains("disabled") || card.classList.contains("click"))
+    return;
 
   // the card clicked was first one
   if (tempFlippedCard.length === 0) {
     tempFlippedCard.push(card.id);
+    return;
   }
 
   // if second card that was click is not equal to first card
-  if (tempFlippedCard.length && !tempFlippedCard.includes(card.classList.id)) {
+  if (tempFlippedCard.length > 0 && !tempFlippedCard.includes(card.id)) {
     tempFlippedCard = [];
 
-    unflippingCard();
+    setTimeout(() => {
+      unflippingCard();
+    }, 500);
+
     return;
   }
-  if (tempFlippedCard.length && tempFlippedCard.includes(card.classList.id)) {
-    markeAsChecked(card.classList.id);
+
+  // if second card is same as first card
+  if (tempFlippedCard.length > 0 && tempFlippedCard.includes(card.id)) {
+    setTimeout(() => {
+      markeAsChecked(card.id);
+    }, 500);
     return;
   }
 }
@@ -88,8 +97,8 @@ function createCard() {
 
   // Toggle the 'click' class on card click
   card.addEventListener("click", () => {
-    card.classList.toggle("click");
     checkIsMatchCard(card);
+    card.classList.add("click");
   });
 
   return card;
