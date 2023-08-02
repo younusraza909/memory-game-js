@@ -49,12 +49,7 @@ body {
   cursor: pointer;
 }
 
-.button:disabled {
-  background-color: #555;
-  cursor: not-allowed;
-}
-
-.button:not(:disabled):active {
+.button:active {
   transform: scale(0.95);
 }
 

@@ -3,7 +3,6 @@ const gameContainer = document.querySelector(".game-container");
 const timerContainer = document.querySelector(".time");
 const moveContainer = document.querySelector(".moves");
 const restartButton = document.querySelector("#restart");
-const startButton = document.querySelector("#start");
 
 // State For Our App
 let moves = 0;
@@ -187,7 +186,4 @@ restartButton.addEventListener("click", () => {
 });
 
 // Wait for the DOM to be fully loaded before rendering the game
-start.addEventListener("click", () => {
-  renderGame();
-  startButton.disabled = true;
-});
+document.addEventListener("DOMContentLoaded", renderGame);
