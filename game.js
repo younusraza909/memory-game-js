@@ -32,7 +32,7 @@ let logos = [
 // an array to temp store a card that is flipped
 let tempFlippedCard = [];
 
-let matchedPairs = 11;
+let matchedPairs = 0;
 
 //function taking 2 argument (card id) and adding disabled class to it which means its matched
 function markeAsChecked(id) {
