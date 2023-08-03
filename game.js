@@ -8,7 +8,7 @@ const restartButton = document.querySelector("#restart");
 let moves = 0;
 let seconds = 1;
 
-let startEventListner;
+let timerInterval;
 
 // we are tracking  logo count on rendering game
 let logoCounts = {};
@@ -178,8 +178,10 @@ function startTimer() {
       "0"
     )}`;
   }
+  // Clear the previous interval if it exists
+  clearInterval(timerInterval);
 
-  setInterval(() => {
+  timerInterval = setInterval(() => {
     timerContainer.textContent = ` Time: ${formatTime(seconds)}`;
     seconds++;
   }, 1000);
@@ -212,6 +214,8 @@ function renderGame() {
 }
 
 function restartGame() {
+  // Clear the timer interval
+  clearInterval(timerInterval);
   // Reset variables
   logoCounts = {};
   seconds = 0;
