@@ -8,6 +8,8 @@ const restartButton = document.querySelector("#restart");
 let moves = 0;
 let seconds = 1;
 
+let startEventListner;
+
 // we are tracking  logo count on rendering game
 let logoCounts = {};
 
@@ -30,6 +32,8 @@ let logos = [
 // an array to temp store a card that is flipped
 let tempFlippedCard = [];
 
+let matchedPairs = 11;
+
 //function taking 2 argument (card id) and adding disabled class to it which means its matched
 function markeAsChecked(id) {
   const cards = document.querySelectorAll(".card");
@@ -39,6 +43,35 @@ function markeAsChecked(id) {
       card.classList = ["card disabled click"];
     }
   });
+
+  // Increment the matchedPairs count
+  matchedPairs++;
+
+  // Check if all pairs are matched
+  if (matchedPairs === logos.length) {
+    // Call a function to show the "You Won" overlay
+    showWinOverlay();
+  }
+}
+
+// To show win overlay
+function showWinOverlay() {
+  const overlay = document.createElement("div");
+  overlay.classList.add("overlay");
+
+  const message = document.createElement("div");
+  message.classList.add("win-message");
+  message.textContent = "You Won!";
+
+  const restartButtonOverlay = document.createElement("button");
+  restartButtonOverlay.textContent = "Play Again";
+  restartButtonOverlay.addEventListener("click", restartGame);
+
+  overlay.appendChild(message);
+  overlay.appendChild(restartButtonOverlay);
+
+  // Append the overlay to the game container
+  gameContainer.appendChild(overlay);
 }
 
 // function to check card is matched or not
@@ -67,7 +100,6 @@ function checkIsMatchCard(card) {
 
     return;
   }
-
   // if second card is same as first card
   if (tempFlippedCard.length > 0 && tempFlippedCard.includes(card.id)) {
     tempFlippedCard = [];
@@ -167,8 +199,6 @@ function unflippingCard() {
 
 // Function to render the game grid
 function renderGame() {
-  // so game container could be empty if it had anything we can than use it for restart game
-  gameContainer.innerHTML = "";
   for (let i = 0; i < 24; i++) {
     const card = createCard(); // Create a card
     // Adding images to card
@@ -181,13 +211,25 @@ function renderGame() {
   startTimer();
 }
 
-// adding event listner to restart button
-restartButton.addEventListener("click", () => {
+function restartGame() {
+  // Reset variables
   logoCounts = {};
   seconds = 0;
   moves = 0;
+
+  // so game container could be empty if it had anything we can than use it for restart game
+  gameContainer.innerHTML = "";
+
+  // Re-render the game
   renderGame();
+
+  // Update the UI
   updateUI();
+}
+
+// adding event listner to restart button
+restartButton.addEventListener("click", () => {
+  restartGame();
 });
 
 // Wait for the DOM to be fully loaded before rendering the game
